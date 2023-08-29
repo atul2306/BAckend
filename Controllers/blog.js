@@ -243,8 +243,7 @@ module.exports.DeleteBlog = async (req, res) => {
 
   module.exports.getBlogFromId = async (req, res, next) => {
     try {
-      const blog = await Blog.findOne({_id:req.body.id});
-      // console.log(post);
+      const blog = await Blog.findById(req.body.id);
       return res.status(200).json({
         ok: true,
         blog,
