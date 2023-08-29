@@ -20,8 +20,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/oauth",oauth)
-app.use("/api/blog",blog)
+// app.use("/api/oauth",oauth)
+// app.use("/api/blog",blog)
 app.use('/', (req, res) => {
   res.send('Hey this is my API running 🥳')
 })
@@ -38,18 +38,18 @@ const PORT = process.env.PORT || 8000;
 
 
 // const CONNECTION_URL = `mongodb+srv://assignment:assignment@cluster0.4sdqfmq.mongodb.net/?retryWrites=true&w=majority`;
-mongoose
-  .connect(process.env.CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`MongoDB Connected and Connection started at ${PORT}`);
-      console.log(`Local -> http://localhost:8000`);
-      console.log(`Client Origin -> ${process.env.CLIENT_ORIGIN}`);
-    });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// mongoose
+//   .connect(process.env.CONNECTION_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     app.listen(PORT, () => {
+//       console.log(`MongoDB Connected and Connection started at ${PORT}`);
+//       console.log(`Local -> http://localhost:8000`);
+//       console.log(`Client Origin -> ${process.env.CLIENT_ORIGIN}`);
+//     });
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
