@@ -45,9 +45,14 @@ module.exports.blog_add_controller = async (req, res) => {
 
 module.exports.Updateblogtitle = async (req, res) => {
   try {
-    const { userid, postid ,newTitle} = req.body
+    const { userid, postid ,newTitle , id} = req.body
     const user = await User.findById(userid);
-
+    if(userid !== id){
+      return res.status(400).json({
+        ok: false,
+        message: "you cant Update",
+      });
+    }
     if (user.posts.includes(postid)) {
       const post = await Blog.findById(postid);
       post.caption = req.body.newTitle;
@@ -69,7 +74,13 @@ module.exports.Updateblogtitle = async (req, res) => {
 
 module.exports.UpdateblogDescription = async (req, res) => {
     try {
-    const { userid, postid ,newDescription} = req.body
+    const { userid, postid ,newDescription , id} = req.body
+    if(userid !== id){
+      return res.status(400).json({
+        ok: false,
+        message: "you cant Update",
+      });
+    }
 
       const user = await User.findById(userid);
       if (user.posts.includes(postid)) {
@@ -97,7 +108,13 @@ module.exports.UpdateblogDescription = async (req, res) => {
 module.exports.DeleteBlog = async (req, res) => {
     try {
      
-      const { userid,postid} = req.body
+      const { userid,postid , id} = req.body
+      if(id !== userid) {
+        return res.status(400).json({
+          ok: false,
+          message: "Unauthorised",
+        });
+      }
       const post = await Blog.findById(postid);
       if (!post) {
         return res.status(400).json({
@@ -111,10 +128,9 @@ module.exports.DeleteBlog = async (req, res) => {
           message: "Unauthorised",
         });
       }
-      await post.deleteOne(); // post deleted from the model
+      await post.deleteOne(); 
       const user = await User.findById(userid);
       const index = user.posts?.indexOf(postid);
-      console.log({user,index});
       
       if (index) {
         user.posts?.splice(index, 1);
