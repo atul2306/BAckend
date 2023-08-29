@@ -9,6 +9,6 @@ router.post("/AddLike",blogcontroller.likeAndUnlikeBlog)
 router.post("/AddComment",blogcontroller.commentsOnBlog)       
 router.post("/deleteBlog",blogcontroller.DeleteBlog)       
 router.get("/getAllBlog",blogcontroller.getAllBlog)       
-router.get("/getBlogFromId",blogcontroller.getBlogFromId)       
+router.post("/getBlogFromId",blogcontroller.getBlogFromId)       
 
 module.exports=router;
