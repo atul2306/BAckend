@@ -46,13 +46,14 @@ module.exports.blog_add_controller = async (req, res) => {
 module.exports.Updateblogtitle = async (req, res) => {
   try {
     const { userid, postid ,newTitle , id} = req.body
-    const user = await User.findById(userid);
     if(userid !== id){
       return res.status(400).json({
         ok: false,
         message: "you cant Update",
       });
     }
+    const user = await User.findById(userid);
+
     if (user.posts.includes(postid)) {
       const post = await Blog.findById(postid);
       post.caption = req.body.newTitle;
@@ -153,7 +154,7 @@ module.exports.DeleteBlog = async (req, res) => {
   module.exports.likeAndUnlikeBlog = async (req, res) => {
     try {
       const { userid,postid} = req.body
-  
+      
       const post = await Blog.findById(postid);
       if (!post) {
         return res.status(400).json({
@@ -161,7 +162,11 @@ module.exports.DeleteBlog = async (req, res) => {
           message: "Post Not Found",
         });
       }
+      console.log(userid,165);
       if (post.likes.includes(userid)) {
+      console.log(userid,167);
+      console.log(post.likes,168);
+
         const index = post.likes.indexOf(userid);
         post.likes.splice(index, 1);
         await post.save();
@@ -235,4 +240,19 @@ module.exports.DeleteBlog = async (req, res) => {
       console.log(err);
     }
   };
+
+  module.exports.getBlogFromId = async (req, res, next) => {
+    try {
+      const blog = await Blog.findOne({_id:req.body.id});
+      // console.log(post);
+      return res.status(200).json({
+        ok: true,
+        blog,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   
