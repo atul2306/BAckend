@@ -22,7 +22,9 @@ app.use((req, res, next) => {
 
 app.use("/api/oauth",oauth)
 app.use("/api/blog",blog)
-
+app.use('/', (req, res) => {
+  res.send('Hey this is my API running 🥳')
+})
 
 // For any unknown API request
 app.use((error, req, res, next) => {
