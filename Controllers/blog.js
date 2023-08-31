@@ -9,9 +9,26 @@ module.exports.blog_add_controller = async (req, res) => {
   try {
     
     const { id, title, description , media } = req.body;
+    if(!title || !description) {
+        return res.status(400).json({
+            ok:false,
+            message:"Enter All Fields"
+        })
+    }
+    if(title.length <5 || description.length<5){
+      return res.status(400).json({
+        ok:false,
+        message:"Minimum length of Title or description should be 5"
+    })
+    }
     const { path } = req.file;
-   console.log(path,13);
-    
+    console.log(path,25);
+    if(path === undefined){
+      return res.status(400).json({
+        ok:false,
+        message:"Invalid File type, please refresh and upload again"
+    })
+    }
     const image = await Cloudinary.uploader.upload(path, {
        resource_type:"auto",
       folder: "BLOG",
